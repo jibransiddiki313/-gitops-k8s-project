@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: gitops-demo-app
-          image: your-dockerhub-username/gitops-demo-app:latest
+          image: jibransiddiki313/gitops-demo-app:latest
           ports:
             - containerPort: 3000
           env:
