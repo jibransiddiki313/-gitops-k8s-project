@@ -29,10 +29,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
 
-  steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Install dependencies
         working-directory: ./app
         run: npm ci
@@ -51,6 +47,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -79,6 +76,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
   update-manifests:
     name: Update K8s Image Tag (GitOps)
     runs-on: ubuntu-latest
@@ -110,6 +108,7 @@ jobs:
 
           images:
             - name: your-dockerhub-username/gitops-demo-app
+              newName: ${{ env.DOCKER_IMAGE }}
               newTag: "$IMAGE_TAG"
           EOF
 
@@ -130,7 +129,7 @@ jobs:
     if: always()
     steps:
       - name: Notify Success
-        if: needs.update-manifests.result == 'success'
+        if: ${{ needs.update-manifests.result == 'success' && secrets.SLACK_WEBHOOK_URL != '' }}
         uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
@@ -141,7 +140,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Notify Failure
-        if: needs.update-manifests.result == 'failure'
+        if:  ${{ needs.update-manifests.result == 'failure' && secrets.SLACK_WEBHOOK_URL != '' }}
         uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
