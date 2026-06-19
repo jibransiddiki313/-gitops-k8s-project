@@ -10,7 +10,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_USERNAME/gitops-k8s-project
+    repoURL: https://github.com/jibransiddiki313/gitops-k8s-project
     targetRevision: HEAD
     path: k8s/overlays/dev
   destination:
@@ -42,7 +42,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_USERNAME/gitops-k8s-project
+    repoURL: https://github.com/jibransiddiki313/gitops-k8s-project
     targetRevision: HEAD
     path: k8s/overlays/staging
   destination:
@@ -73,7 +73,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_USERNAME/gitops-k8s-project
+    repoURL: https://github.com/jibransiddiki313/gitops-k8s-project
     targetRevision: HEAD
     path: k8s/overlays/prod
   destination:
